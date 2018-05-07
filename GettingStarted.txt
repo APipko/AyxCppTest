@@ -1,0 +1,28 @@
+AyxCppTest Getting started.
+
+Windows
+----------------------------
+You will need CMake installed (https://cmake.org/) as well as Visual Studio.
+Run CMake-gui
+	"Where is the source code:" - Navigate to AyxCppTest (after unzipping)
+	"Where to build the binaries:" - Navigate to AyxCppTest\bin
+	Click Configure - default compiler should be OK
+	Click Generate
+	Click Open Project
+In Visual Studio
+	Set AyxCppTest as startup project
+	Read instructions in exercize?.cpp and proceed
+
+Linux
+----------------------------
+You will need CMake and GCC installed - use your package manager
+unzip AyxCppTest 
+from a terminal, cd to the AyxCppTest directory (cd ~/AyxCppTest or similar)
+mkdir bin
+cd bin
+cmake ..
+make
+
+using your favorite editor - follow the instructions in excersizeN.cpp
+	
+
