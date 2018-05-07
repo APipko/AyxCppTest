@@ -15,7 +15,7 @@ namespace AyxCppTest
 	*/
 	extern "C" const char* AddStr(const char* lhs, const char* rhs)
 	{
-		return Add(lhs, rhs).c_str();
+        return Add(lhs, rhs).c_str();
 	}
 
 	TEST_CASE("exercise6")
