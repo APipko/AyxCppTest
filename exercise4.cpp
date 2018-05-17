@@ -4,6 +4,7 @@
 #include <thread>
 #include "spatial.h"
 #include <atomic>
+#include <mutex>
 
 namespace AyxCppTest
 {
@@ -18,7 +19,8 @@ namespace AyxCppTest
 		class RectangleSizeCounter
 		{
 		private:
-            std::atomic<double> m_nTotalSize{ 0 };
+            double m_nTotalSize{ 0 };
+            std::mutex counterMutex_;
 		public:
 			RectangleSizeCounter();
 			void AddRectangle(Rectangle rect);
@@ -33,16 +35,15 @@ namespace AyxCppTest
         {
             double rectSize = rect.Size();
 
-            double oldSize = m_nTotalSize.load();
-            double value = oldSize + rectSize;
-            while (!m_nTotalSize.compare_exchange_weak(oldSize, value)){
-                value = oldSize + rectSize;
-            }
+            std::lock_guard<std::mutex> guard(counterMutex_);
+            m_nTotalSize = m_nTotalSize + rectSize;
 		}
 
 		double RectangleSizeCounter::GetTotalSize()
 		{
-            return m_nTotalSize.load();
+            std::lock_guard<std::mutex> guard(counterMutex_);
+            auto value = m_nTotalSize;
+            return value;
 		}
 
 	}
@@ -67,7 +68,7 @@ namespace AyxCppTest
 		}
 		
 		auto b = std::chrono::system_clock::now();
-		for (unsigned nTry = 0; nTry<20; ++nTry)
+        for (unsigned nTry = 0; nTry<20; ++nTry)
 		{
 			RectangleSizeCounter counter;
 

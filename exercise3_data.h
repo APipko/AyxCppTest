@@ -35,6 +35,8 @@ public:
             return *current_position++;
         };
         
+        
+        
         return reader;
     }
 };
